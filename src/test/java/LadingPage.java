@@ -75,6 +75,7 @@ public class LadingPage {
             sleep (5000);
             signInButton.get(0).click();
             sleep (5000);
+            webDriver.navigate().refresh();
             webDriver.navigate().back();
             sleep (5000);
 
@@ -86,6 +87,7 @@ public class LadingPage {
         sleep (5000);
         signInButton.get(1).click();
         sleep (5000);
+        webDriver.navigate().refresh();
         webDriver.navigate().back();
         sleep (5000);
 
@@ -94,6 +96,7 @@ public class LadingPage {
         sleep (5000);
         signInButton.get(2).click();
         sleep (5000);
+        webDriver.navigate().refresh();
         webDriver.navigate().back();
         sleep (5000);
 
@@ -102,6 +105,7 @@ public class LadingPage {
         sleep (5000);
         signInButton.get(3).click();
         sleep (5000);
+        webDriver.navigate().refresh();
         webDriver.navigate().back();
         sleep (5000);
         }
