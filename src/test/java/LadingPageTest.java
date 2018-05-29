@@ -11,18 +11,31 @@ import static java.lang.Thread.sleep;
 
 
 public class LadingPageTest {
-WebDriver webDriver;
+    WebDriver webDriver;
+    LadingPage ladingPage;
 
-@BeforeMethod
-public void before () {
-    webDriver = new FirefoxDriver();
-    webDriver.get("http://sustanols.ru/");
-}
+    @BeforeMethod
+    public void before() {
+        webDriver = new FirefoxDriver();
+        webDriver.get("http://sustanols.ru/");
+        ladingPage = new LadingPage(webDriver);
+    }
 
     @Test
-    public void formTest () {
-        LadingPage ladingPage = new LadingPage (webDriver);
-        ladingPage.form("Test","0500000000");
+    public void successfulSubmitOfEachOrderForm() {
+        String name = "Viktor Pavlik";
+        String phoneNumber = "0500000000";
+
+        Assert.assertEquals(ladingPage.getSubmitOrderFormsCount(), 4,
+                "Wrong number of SubmitOrder forms on Landing page.");
+
+        ladingPage.fillOrderFormsInALoop(name, phoneNumber);
+
+    }
+
+    @Test
+    public void formTest() {
+        ladingPage.form("Test", "0500000000");
 
         Assert.assertEquals(ladingPage.getCurrentUrl(),
                 "http://sustanols.ru/subscribe.html",
@@ -30,15 +43,13 @@ public void before () {
     }
 
     @Test
-    public void listFormTest () throws InterruptedException {
-    LadingPage ladingPage = new LadingPage(webDriver);
-    ladingPage.getTextFormList("Тест", "0500000000");
+    public void listFormTest() throws InterruptedException {
+        ladingPage.getTextFormList("Тест", "0500000000");
     }
 
     @Test
-    public void subscribeTest () {
-        LadingPage ladingPage = new LadingPage (webDriver);
-        ladingPage.form("Test","0500000000");
+    public void subscribeTest() {
+        ladingPage.form("Test", "0500000000");
 
         Assert.assertEquals(ladingPage.getCurrentUrl(),
                 "http://sustanols.ru/subscribe.html",
@@ -54,18 +65,16 @@ public void before () {
     @DataProvider
     public Object[][] validDataProvider() {
         return new Object[][]{
-                { "", "0500000000"},
-                {"Test",""},
-                {"",""},
-                {"T","1"},
-                { "Test", "050"},
+                {"", "0500000000"},
+                {"Test", ""},
+                {"", ""},
+                {"T", "1"},
+                {"Test", "050"},
         };
     }
 
-    @Test (dataProvider = "validDataProvider")
-    public void negativFormTest(String name, String phone) throws InterruptedException {
-
-        LadingPage ladingPage = new LadingPage (webDriver);
+    @Test(dataProvider = "validDataProvider")
+    public void negativeFormTest(String name, String phone) throws InterruptedException {
         ladingPage.form(name, phone);
         Assert.assertNotEquals(ladingPage.getCurrentUrl(),
                 "http://sustanols.ru/subscribe.html",
@@ -77,24 +86,23 @@ public void before () {
     @DataProvider
     public Object[][] validCodeVerification() {
         return new Object[][]{
-                { "123"},
+                {"123"},
                 {"1234567891234565"},
         };
     }
-    @Test (dataProvider = "validCodeVerification")
-    public void negativCodeVerificationTest (String code) throws InterruptedException {
-        LadingPage ladingPage = new LadingPage (webDriver);
+
+    @Test(dataProvider = "validCodeVerification")
+    public void negativCodeVerificationTest(String code) throws InterruptedException {
         ladingPage.setCodeVerification(code);
         Assert.assertEquals(ladingPage.getTextErrorMassageCod(),
-        "К сожалению, данный код не найден! Вероятнее всего, вы приобрели поддельный продукт.",
+                "К сожалению, данный код не найден! Вероятнее всего, вы приобрели поддельный продукт.",
                 "Failed to validate the code, passes with errors in the code");
         sleep(3000);
 
     }
 
-    @Test ()
-    public void codeVerificationTest () throws InterruptedException {
-        LadingPage ladingPage = new LadingPage (webDriver);
+    @Test()
+    public void codeVerificationTest() throws InterruptedException {
         ladingPage.setCodeVerification("123456789123456");
         Assert.assertEquals(ladingPage.getTextErrorMassageCod(),
                 "Данный код верен. Спасибо, что выбрали нашу продукцию!",
@@ -103,16 +111,15 @@ public void before () {
     }
 
     @Test
-    public void privacyPolicyTest () throws InterruptedException {
-        LadingPage ladingPage = new LadingPage (webDriver);
+    public void privacyPolicyTest() throws InterruptedException {
         ladingPage.privacyPolicy();
 //        ArrayList tabs2 = new ArrayList (webDriver.getWindowHandles());
 //        webDriver.switchTo().window(String.valueOf(tabs2.get(1)));
-        sleep (2000);
+        sleep(2000);
     }
 
     @AfterMethod
-    public void after ()    {
+    public void after() {
         webDriver.close();
     }
 
