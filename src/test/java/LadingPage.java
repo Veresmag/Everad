@@ -68,46 +68,44 @@ public class LadingPage {
             String formResultText = formResult.getText();
             System.out.println(formResultText);
             System.out.println(formList.size());}
-//            if (formList.contains("Ваши данные не будут переданы третьим лицам!"));
-//                else {}
             inputNameForm.get(0).sendKeys(name);
             inputPhoneForm.get(0).sendKeys(phone);
-            sleep (5000);
+            sleep (3000);
             signInButton.get(0).click();
-            sleep (5000);
-            webDriver.navigate().refresh();
+            sleep (3000);
             webDriver.navigate().back();
-            sleep (5000);
+            webDriver.navigate().refresh();
+            sleep (3000);
 
 // Нашел как обратиться к каждой форме, но код получается огромный.
 // Уверен что должен быть цикличный метод.
 
         inputNameForm.get(1).sendKeys(name);
         inputPhoneForm.get(1).sendKeys(phone);
-        sleep (5000);
+        sleep (3000);
         signInButton.get(1).click();
-        sleep (5000);
-        webDriver.navigate().refresh();
+        sleep (3000);
         webDriver.navigate().back();
-        sleep (5000);
+        webDriver.navigate().refresh();
+        sleep (3000);
 
         inputNameForm.get(2).sendKeys(name);
         inputPhoneForm.get(2).sendKeys(phone);
-        sleep (5000);
+        sleep (3000);
         signInButton.get(2).click();
-        sleep (5000);
-        webDriver.navigate().refresh();
+        sleep (3000);
         webDriver.navigate().back();
-        sleep (5000);
+        webDriver.navigate().refresh();
+        sleep (3000);
 
         inputNameForm.get(3).sendKeys(name);
         inputPhoneForm.get(3).sendKeys(phone);
-        sleep (5000);
+        sleep (3000);
         signInButton.get(3).click();
-        sleep (5000);
-        webDriver.navigate().refresh();
+        sleep (3000);
         webDriver.navigate().back();
-        sleep (5000);
+        webDriver.navigate().refresh();
+        sleep (3000);
         }
 }
 
